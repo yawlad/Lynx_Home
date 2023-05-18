@@ -100,19 +100,32 @@ sap.ui.define([
 			},
 
 
-			onSearch : function (oEvent) {
+			onTextSearch : function (oEvent) {
 				if (oEvent.getParameters().refreshButtonPressed) {
-					// Search field's 'refresh' button has been pressed.
-					// This is visible if you select any master list item.
-					// In this case no new search is triggered, we only
-					// refresh the list binding.
 					this.onRefresh();
 				} else {
 					var aTableSearchState = [];
 					var sQuery = oEvent.getParameter("query");
+					console.log(oEvent)
 
 					if (sQuery && sQuery.length > 0) {
-						aTableSearchState = [new Filter("MaterialText", FilterOperator.Contains, sQuery)];
+						aTableSearchState = [new Filter("MaterialText", FilterOperator.EQ, sQuery)];
+					}
+					this._applySearch(aTableSearchState);
+				}
+
+			},
+
+			onAuthorSearch : function (oEvent) {
+				if (oEvent.getParameters().refreshButtonPressed) {
+					this.onRefresh();
+				} else {
+					var aTableSearchState = [];
+					var sQuery = oEvent.getParameter("query");
+					console.log(oEvent)
+
+					if (sQuery && sQuery.length > 0) {
+						aTableSearchState = [new Filter("CreatedByFullName", FilterOperator.Contains, sQuery)];
 					}
 					this._applySearch(aTableSearchState);
 				}
