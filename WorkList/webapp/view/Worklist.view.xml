@@ -44,11 +44,26 @@
 				</headerToolbar>
 
 				<columns>
+				<Column id="idColumn">
+						<Text text="{i18n>tableIdColumnTitle}" id="idColumnTitle"/>
+					</Column>
 					<Column id="nameColumn">
 						<Text text="{i18n>tableNameColumnTitle}" id="nameColumnTitle"/>
 					</Column>
-					<Column id="unitNumberColumn" hAlign="End">
-						<Text text="{i18n>tableUnitNumberColumnTitle}" id="unitNumberColumnTitle"/>
+					<Column id="descriptionColumn" hAlign="End">
+						<Text text="{i18n>tableDescriptionColumnTitle}" id="descriptionColumnTitle"/>
+					</Column>
+					<Column id="createdByColumn" hAlign="End">
+						<Text text="{i18n>tableCreatedByColumnTitle}" id="createdByColumnTitle"/>
+					</Column>
+					<Column id="createdColumn" hAlign="End">
+						<Text text="{i18n>tableCreatedColumnTitle}" id="createdColumnTitle"/>
+					</Column>
+					<Column id="modifiedByColumn" hAlign="End">
+						<Text text="{i18n>tableModifiedByColumnTitle}" id="modifiedByColumnTitle"/>
+					</Column>
+					<Column id="modifiedColumn" hAlign="End">
+						<Text text="{i18n>tableModifiedColumnTitle}" id="modifiedColumnTitle"/>
 					</Column>
 				</columns>
 
@@ -57,10 +72,20 @@
 						type="Navigation"
 						press="onPress">
 						<cells>
+							<ObjectNumber
+								unit="{MaterialID}"/>
 							<ObjectIdentifier
 								title="{MaterialText}"/>
 							<ObjectNumber
-								unit="{CreatedBy}"/>
+								unit="{MaterialDescription}"/>
+							<ObjectNumber
+								unit="{CreatedByFullName}"/>
+							<ObjectNumber
+								unit="{Created}"/>
+							<ObjectNumber
+								unit="{ModifiedByFullName}"/>
+							<ObjectNumber
+								unit="{path: 'Modified', type: 'sap.ui.model.type.DateTime', formatOptions: {pattern: 'HH:mm dd/MM/yyyy'}}"/>
 						</cells>
 					</ColumnListItem>
 				</items>
