@@ -1,109 +1,144 @@
 <mvc:View
-	controllerName="zjblessons.WorkList.controller.Worklist"
-	xmlns="sap.m"
-	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:semantic="sap.f.semantic">
+    controllerName="zjblessons.WorkList.controller.Worklist"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:semantic="sap.f.semantic"
+>
+    <semantic:SemanticPage
+        id="page"
+        headerPinnable="false"
+        toggleHeaderOnTitleClick="false"
+    >
+        <semantic:titleHeading>
+            <Title text="{i18n>worklistTitle}" />
+        </semantic:titleHeading>
 
-	<semantic:SemanticPage
-		id="page"
-		headerPinnable="false"
-		toggleHeaderOnTitleClick="false">
-
-		<semantic:titleHeading>
-			<Title text="{i18n>worklistTitle}" />
-		</semantic:titleHeading>
-
-		<semantic:content>
-			<Table
-				id="table"
-				width="auto"
-				items="{
+        <semantic:content>
+            <Table
+                id="table"
+                width="auto"
+                items="{
 					path: '/zjblessons_base_Materials',
 					sorter: {
 						path: 'MaterialText',
 						descending: false
 					}
 				}"
-				noDataText="{worklistView>/tableNoDataText}"
-				busyIndicatorDelay="{worklistView>/tableBusyDelay}"
-				growing="true"
-				growingScrollToLoad="true"
-				updateFinished="onUpdateFinished">
+                noDataText="{worklistView>/tableNoDataText}"
+                busyIndicatorDelay="{worklistView>/tableBusyDelay}"
+				growingThreshold="15"
+                growing="true"
+                growingScrollToLoad="true"
+                updateFinished="onUpdateFinished"
+            >
+                <headerToolbar>
+                    <Toolbar>
+                        <Title
+                            id="tableHeader"
+                            text="{worklistView>/worklistTableTitle}"
+                        />
+                        <ToolbarSpacer />
+                        <SearchField
+                            id="searchFieldCreatedBy"
+                            tooltip="{i18n>worklistSearchTooltipCreatedBy}"
+                            search="onAuthorSearch"
+                            width="auto"
+                        />
+                        <SearchField
+                            id="searchFieldText"
+                            tooltip="{i18n>worklistSearchTooltipText}"
+                            search="onTextSearch"
+                            width="auto"
+                        />
+                    </Toolbar>
+                </headerToolbar>
 
-				<headerToolbar>
-					<Toolbar>
-						<Title id="tableHeader" text="{worklistView>/worklistTableTitle}"/>
-						<ToolbarSpacer />
-						<SearchField
-							id="searchFieldCreatedBy"
-							tooltip="{i18n>worklistSearchTooltipCreatedBy}"
-							search="onAuthorSearch"
-							width="auto">
-						</SearchField>
-						<SearchField
-							id="searchFieldText"
-							tooltip="{i18n>worklistSearchTooltipText}"
-							search="onTextSearch"
-							width="auto">
-						</SearchField>
-						
-					</Toolbar>
-				</headerToolbar>
+                <columns>
+                    <Column id="idColumn">
+                        <Text
+                            text="{i18n>tableIdColumnTitle}"
+                            id="idColumnTitle"
+                        />
+                    </Column>
+                    <Column id="nameColumn">
+                        <Text
+                            text="{i18n>tableNameColumnTitle}"
+                            id="nameColumnTitle"
+                        />
+                    </Column>
+                    <Column
+                        id="descriptionColumn"
+                        hAlign="End"
+                    >
+                        <Text
+                            text="{i18n>tableDescriptionColumnTitle}"
+                            id="descriptionColumnTitle"
+                        />
+                    </Column>
+                    <Column
+                        id="createdByColumn"
+                        hAlign="End"
+                    >
+                        <Text
+                            text="{i18n>tableCreatedByColumnTitle}"
+                            id="createdByColumnTitle"
+                        />
+                    </Column>
+                    <Column
+                        id="createdColumn"
+                        hAlign="End"
+                    >
+                        <Text
+                            text="{i18n>tableCreatedColumnTitle}"
+                            id="createdColumnTitle"
+                        />
+                    </Column>
+                    <Column
+                        id="modifiedByColumn"
+                        hAlign="End"
+                    >
+                        <Text
+                            text="{i18n>tableModifiedByColumnTitle}"
+                            id="modifiedByColumnTitle"
+                        />
+                    </Column>
+                    <Column
+                        id="modifiedColumn"
+                        hAlign="End"
+                    >
+                        <Text
+                            text="{i18n>tableModifiedColumnTitle}"
+                            id="modifiedColumnTitle"
+                        />
+                    </Column>
+                </columns>
 
-				<columns>
-				<Column id="idColumn">
-						<Text text="{i18n>tableIdColumnTitle}" id="idColumnTitle"/>
-					</Column>
-					<Column id="nameColumn">
-						<Text text="{i18n>tableNameColumnTitle}" id="nameColumnTitle"/>
-					</Column>
-					<Column id="descriptionColumn" hAlign="End">
-						<Text text="{i18n>tableDescriptionColumnTitle}" id="descriptionColumnTitle"/>
-					</Column>
-					<Column id="createdByColumn" hAlign="End">
-						<Text text="{i18n>tableCreatedByColumnTitle}" id="createdByColumnTitle"/>
-					</Column>
-					<Column id="createdColumn" hAlign="End">
-						<Text text="{i18n>tableCreatedColumnTitle}" id="createdColumnTitle"/>
-					</Column>
-					<Column id="modifiedByColumn" hAlign="End">
-						<Text text="{i18n>tableModifiedByColumnTitle}" id="modifiedByColumnTitle"/>
-					</Column>
-					<Column id="modifiedColumn" hAlign="End">
-						<Text text="{i18n>tableModifiedColumnTitle}" id="modifiedColumnTitle"/>
-					</Column>
-				</columns>
+                <items>
+                    <ColumnListItem
+                        type="Navigation"
+                        press="onPress"
+                    >
+                        <cells>
+                            <ObjectNumber unit="{MaterialID}" />
+                            <ObjectIdentifier title="{MaterialText}" />
+                            <ObjectNumber unit="{MaterialDescription}" />
+                            <ObjectNumber unit="{CreatedByFullName}" />
+                            <ObjectNumber unit="{Created}" />
+                            <ObjectNumber unit="{ModifiedByFullName}" />
+                            <ObjectNumber
+                                unit="{path: 'Modified', type: 'sap.ui.model.type.DateTime', formatOptions: {pattern: 'HH:mm dd/MM/yyyy'}}"
+                            />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </semantic:content>
 
-				<items>
-					<ColumnListItem
-						type="Navigation"
-						press="onPress">
-						<cells>
-							<ObjectNumber
-								unit="{MaterialID}"/>
-							<ObjectIdentifier
-								title="{MaterialText}"/>
-							<ObjectNumber
-								unit="{MaterialDescription}"/>
-							<ObjectNumber
-								unit="{CreatedByFullName}"/>
-							<ObjectNumber
-								unit="{Created}"/>
-							<ObjectNumber
-								unit="{ModifiedByFullName}"/>
-							<ObjectNumber
-								unit="{path: 'Modified', type: 'sap.ui.model.type.DateTime', formatOptions: {pattern: 'HH:mm dd/MM/yyyy'}}"/>
-						</cells>
-					</ColumnListItem>
-				</items>
-			</Table>
-		</semantic:content>
-
-		<semantic:sendEmailAction>
-			<semantic:SendEmailAction id="shareEmail" press="onShareEmailPress"/>
-		</semantic:sendEmailAction>
-
-
-	</semantic:SemanticPage>
-
+        <semantic:sendEmailAction>
+            <semantic:SendEmailAction
+                id="shareEmail"
+                press="onShareEmailPress"
+            />
+        </semantic:sendEmailAction>
+    </semantic:SemanticPage>
 </mvc:View>
